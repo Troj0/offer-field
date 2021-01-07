@@ -36,10 +36,10 @@ app.initializers.add('alterbyte/offer-field', () => {
    });
 
     extend(CommentPost.prototype, 'headerItems', function(items) {
-      const thisPost = this.props.post;
-      const bidding = this.props.post.attribute('alterbyteBidding');
+      const thisPost = this.attrs.post;
+      const bidding = this.attrs.post.attribute('alterbyteBidding');
       if (app.forum.attribute('alterbyteBiddingCanSubmit') && thisPost.number() != 1 && bidding !== null){
-        const bidding = this.props.post.attribute('alterbyteBidding') + " ر.س";
+        const bidding = this.attrs.post.attribute('alterbyteBidding') + " ر.س";
         if(bidding !== null || bidding !== '' || bidding !== 0) {
           items.add('alterbyte-bidding', CommentField.component({
             value: bidding,

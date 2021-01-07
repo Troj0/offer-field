@@ -7,7 +7,7 @@ use Flarum\Extend\ExtenderInterface;
 use flarum\Extension\Extension;
 use Flarum\Foundation\AbstractValidator;
 use Flarum\Post\Event\Saving;
-use Flarum\User\AssertPermissionTrait;
+//use Flarum\User\AssertPermissionTrait; 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Optional;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class SaveRating implements ExtenderInterface 
 {
-    use AssertPermissionTrait;
+    //use AssertPermissionTrait;
 
     public function extend(Container $container, Extension $extension = null )
     {
