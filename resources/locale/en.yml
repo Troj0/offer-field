@@ -1,0 +1,6 @@
+alterbyte-bidding:
+  admin:
+    permission:
+      view: View bidding
+      submit: submit bidding
+      moderate: moderate bidding
