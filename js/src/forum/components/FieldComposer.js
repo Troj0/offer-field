@@ -12,10 +12,10 @@ export default class FieldComposer extends Component {
            // ClassName: 'alterbyteBid',
            placeholder: 'please enter bid',
             value: this.content,
-            oninput: m.withAttr('value', value => {
-                this.content = value
-                this.props.onchange(value)
-            })
+            oninput: e => {
+                this.content = e.target.value;
+                this.attrs.onchange(e.target.value)
+            }
         });
     }
 };
