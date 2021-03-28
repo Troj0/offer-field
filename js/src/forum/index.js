@@ -1,16 +1,9 @@
  import app from 'flarum/app';
  import {extend} from 'flarum/extend';
- import EditPostComposer from 'flarum/components/EditPostComposer';
  import ReplyComposer from 'flarum/components/ReplyComposer';
  import CommentPost from 'flarum/components/CommentPost';
- import DiscussionHero from 'flarum/components/DiscussionHero';
-import Stars from './components/stars';
-import Answer from './../lib/models/Answer';
-import Field from './../lib/models/Field';
 import FieldComposer from './components/FieldComposer';
 import CommentField from './components/CommentField';
-import { username } from './components/Auth';
-var Auth = require("./components/Auth")
 
 
 app.initializers.add('alterbyte/offer-field', () => {
@@ -40,10 +33,8 @@ app.initializers.add('alterbyte/offer-field', () => {
       const thisPostAttr = this.attrs.post.data;
       const bidding = this.attrs.post.attribute('alterbyteBidding');
       if ( thisPost.number() != 1 && bidding !== null){
-        console.log(thisPostAttr)
         const bidding = this.attrs.post.attribute('alterbyteBidding') + " ر.س";
         if(bidding) {
-          console.log(bidding)
           items.add('alterbyte-bidding', CommentField.component({
             value: bidding,
             }))
