@@ -37,10 +37,13 @@ app.initializers.add('alterbyte/offer-field', () => {
 
     extend(CommentPost.prototype, 'headerItems', function(items) {
       const thisPost = this.attrs.post;
+      const thisPostAttr = this.attrs.post.data;
       const bidding = this.attrs.post.attribute('alterbyteBidding');
-      if (app.forum.attribute('alterbyteBiddingCanSubmit') && thisPost.number() != 1 && bidding !== null){
+      if ( thisPost.number() != 1 && bidding !== null){
+        console.log(thisPostAttr)
         const bidding = this.attrs.post.attribute('alterbyteBidding') + " ر.س";
-        if(bidding !== null || bidding !== '' || bidding !== 0) {
+        if(bidding) {
+          console.log(bidding)
           items.add('alterbyte-bidding', CommentField.component({
             value: bidding,
             }))
