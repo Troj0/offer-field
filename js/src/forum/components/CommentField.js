@@ -1,6 +1,5 @@
-import app from 'flarum/app';
 import Component from 'flarum/Component';
-import Model from 'flarum/Model';
+
 export default class FieldComposer extends Component {
     init() {
         //this.content = this.props.value;
