@@ -25,18 +25,20 @@ class SaveRating implements ExtenderInterface
     {
         $attributes = Arr::get($event->data, 'attributes', []);
         if (array_key_exists('alterbyteBidding', $attributes))  {
-            $this->assertCan($event->actor, 'alterbyteBiddingEdit', $event->post);
+            //$this->assertCan($event->actor, 'alterbyteBiddingEdit', $event->post);
+            $event->actor->can('alterbyteBiddingEdit', $event->post);
 
             /**
              * @var $validator RatingValidator
              */
-            $validator = app(RatingValidator::class);
+            $validator = resolve(RatingValidator::class);
             $validator->assertValid([
                 'bid' => $attributes['alterbyteBidding'],
             ]);
 
             //now we are calculating the average, but later will calculate the Biggest value in the whole discussion.
             $event->post->alterbyte_bid = $attributes['alterbyteBidding'];
+            $event->attributes['alterbyteBidding'] = $event->post->alterbyte_bid;
             $bargId = $event->post->discussion->barg_init_post_id;
            // $bids = DB::table('posts')->pluck('alterbyte_bid', 'id');
             $id = (int) Arr::get($event->post->alterbyte_bid, 'id');

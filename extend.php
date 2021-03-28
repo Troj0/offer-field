@@ -12,8 +12,9 @@
 namespace Alterbyte\OfferField;
 
 use Alterbyte\OfferField\Policies\PostPolicy;
+use Flarum\Api\Serializer\PostSerializer;
 use Flarum\Extend;
-use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\events\Dispatcher;
 
 return [
     (new Extend\Frontend('forum'))
@@ -24,12 +25,31 @@ return [
         ->css(__DIR__.'/resources/less/admin.less'),
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
-    new Extenders\DiscussionAttributes(),
-    new Extenders\ForumAttributes(),
-    new Extenders\PostAttributes(),
+    // the below is used as a replacement for the old Extenders/PostAttributes
+    (new Extend\ApiSerializer(PostSerializer::class))
+        
+        // Multiple modifications at once, more complex logic
+        ->attributes(function($serializer, $posts, $attributes) {
+            if ($serializer->getActor()->can('view')) {
+                $attributes['alterbyteBidding'] = $posts->alterbyte_bid;
+                $attributes['alterbyteBiddingCanEdit'] = $serializer->getActor()->can('alterbyteBiddingEdit');
+            }
+            if ($serializer->getActor()->can('alterbyteBidding.submit')) {
+                $attributes['alterbyteBidding'] = $posts->alterbyte_bid;
+                $attributes['alterbyteBiddingCanSubmit'] = true;
+            }
+
+            return $attributes;
+        }),
+    
+    
+
+    //new Extenders\DiscussionAttributes(),
+    //new Extenders\ForumAttributes(),
+    //new Extenders\PostAttributes(),
     new Extenders\SaveRating(),
     
     function(Dispatcher $events) {
-        $events->subscribe(PostPolicy::class);
+        //$events->subscribe(PostPolicy::class);
     }
 ];
